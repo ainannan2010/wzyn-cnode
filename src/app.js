@@ -17,6 +17,7 @@ const render = (Component) => {
 }
 render(App)
 if (module.hot) {
+  // judge
   module.hot.accept('./App.jsx', () => {
     const NextApp = require('./App.jsx').default // eslint-disable-line
     // ReactDOM.hydrate(
