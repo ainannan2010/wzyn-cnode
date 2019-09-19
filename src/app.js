@@ -6,7 +6,7 @@ import { Provider } from 'mobx-react'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import { blue, pink } from 'material-ui/colors'
 import App from './views/App'
-import AppState from './store/app-state'
+import { AppState, TopicStore } from './store/store'
 // ReactDOM.hydrate(
 //   <App />,
 //   document.getElementById('root')
@@ -38,10 +38,14 @@ const createApp = (TheApp) => {
 const root = document.getElementById('root')
 const initialState = window.__INITIAL__STATE__ || {}
 const appState = new AppState(initialState.appState)
+const topicStore = new TopicStore(initialState.topicStore)
 const render = (Component) => {
   ReactDOM.hydrate(
     <AppContainer>
-      <Provider appState={appState}>
+      <Provider
+        appState={appState}
+        topicStore={topicStore}
+      >
         <BrowserRouter>
           <MuiThemeProvider theme={theme}>
             <Component />

@@ -28,10 +28,11 @@ if (isDev) {
   //   'react-hot-laoder/patch',
   //   path.join(__dirname, '../src/app.js')
   // ]
+  config.devtool = '#cheap-eval-source-map' // 快速定位自己写的代码
   config.devServer = {
     host: '0.0.0.0', // localhost, 127.0.0.1, ip 都可访问，
     port: '8888',
-    contentBase: path.join(__dirname, '../dist'),
+    // contentBase: path.join(__dirname, '../dist'),
     hot: true, // 热更新
     overlay: {
       errors: true
