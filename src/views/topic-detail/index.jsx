@@ -39,13 +39,13 @@ class TopicDetail extends React.Component {
   //   this.getTopic = this.getTopic.bind(this);
   // }
 
-  // componentDidMount() {
-  //   const { id } = this.props.match.params;
-  //   this.props.topicStore.getTopicDetail(id);
-  // }
+  componentDidMount() {
+    const id = this.getTopicId();
+    this.props.topicStore.getTopicDetail(id);
+  }
 
-  getTopic() {
-    const { id } = this.props.match.params;
+  getTopic = () => {
+    const { id } = this.getTopicId();
     return this.props.topicStore.detailMap[id];
   }
 
@@ -164,9 +164,12 @@ class TopicDetail extends React.Component {
 
   //   );
   // }
+  getTopicId = () => this.props.match.params.id
+
   render() {
     const { classes } = this.props;
-    const topic = this.topicStore.topics[0]
+    const id = this.getTopicId()
+    const topic = this.props.topicStore.detailMap[id]
     if (!topic) {
       return (
         <Container>
@@ -194,12 +197,12 @@ class TopicDetail extends React.Component {
         <Paper elevation={4} className={classes.replies}>
           <header className={classes.replyHeader}>
             <span>{`${topic.reply_count} 回复`}</span>
-            <span>{`最新回复 ${topic.last_reply_at}`}</span>
+            <span>{`最新回复 ${dateFormat(topic.last_reply_at, 'yy-mm-dd')}`}</span>
           </header>
           <section>
-            {/* {
+            {
               topic.replies.map(reply => <Reply reply={reply} key={reply.id} />)
-            } */}
+            }
           </section>
         </Paper>
       </div>
