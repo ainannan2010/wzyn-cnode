@@ -8,7 +8,7 @@ const SheetsRegitry = require('react-jss').SheetsRegistry
 const create = require('jss').create
 const preset = require('jss-preset-default').default
 const createMuiTheme = require('material-ui/styles').createMuiTheme
-const createGenerateClassName = require('material-ui/styles/createGenerateClassName').default
+const createGenerateClassName = require('material-ui/styles').createGenerateClassName
 const colors = require('material-ui/colors')
 
 const getStoreState = stores => Object.keys(stores).reduce((result, storeName) => {
@@ -23,9 +23,9 @@ module.exports = (bundle, template, req, res) => {
     const routerContext = {}
     const stores = createStoreMap()
     const sheetsRegistry = new SheetsRegitry()
-    const jss = create(preset())
-    jss.options.createGenerateClassName = createGenerateClassName
-
+    // const jss = create(preset())
+    // jss.options.createGenerateClassName = createGenerateClassName
+    const generateClassName = createGenerateClassName()
     const theme = createMuiTheme({
       palette: {
         primary: colors.blue,
@@ -34,7 +34,7 @@ module.exports = (bundle, template, req, res) => {
       }
     })
 
-    const app = createApp(stores, routerContext, sheetsRegistry, jss, theme, req.url) // app 是react元素
+    const app = createApp(stores, routerContext, sheetsRegistry, generateClassName, theme, req.url) // app 是react元素类型
 
     bootstrap(app).then(() => {
       // 如果是请求首页成功定向到/list页
