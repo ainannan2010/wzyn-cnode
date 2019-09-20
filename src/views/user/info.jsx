@@ -41,17 +41,12 @@ class UserInfo extends React.Component {
     router: PropTypes.object,
   };
 
-  constructor() {
-    super();
-    this.goToTopic = this.goToTopic.bind(this);
-  }
-
   componentWillMount() {
     this.props.appState.getUserDetail();
     this.props.appState.getUserCollections();
   }
 
-  goToTopic(id) {
+  goToTopic = (id) => {
     this.context.router.history.push(`/detail/${id}`);
   }
 
@@ -78,7 +73,7 @@ class UserInfo extends React.Component {
                             <TopicItem
                               topic={topic}
                               key={topic.id}
-                              onClick={() => { this.goToTopic(topic.id); }}
+                              onClick={() => this.goToTopic(topic.id)}
                             />
                           )) :
                           <Typography align="center">
@@ -109,7 +104,7 @@ class UserInfo extends React.Component {
                             <TopicItem
                               topic={topic}
                               key={topic.id}
-                              onClick={() => { this.goToTopic(topic.id); }}
+                              onClick={() => this.goToTopic(topic.id)}
                             />
                           )) :
                           <Typography align="center">
@@ -140,7 +135,7 @@ class UserInfo extends React.Component {
                             <TopicItem
                               topic={topic}
                               key={topic.id}
-                              onClick={() => { this.goToTopic(topic.id); }}
+                              onClick={() => this.goToTopic(topic.id)}
                             />
                           )) :
                           <Typography align="center">
