@@ -64,8 +64,8 @@ export default class TopicStore {
     tab = null,
   } = { }) {
     this.topics = topics.map(topic => new Topic(createTopic(topic)));
-    this.syncing = syncing;
     this.details = details.map(topic => new Topic(createTopic(topic)));
+    this.syncing = syncing;
     this.tab = tab;
   }
 
@@ -99,7 +99,6 @@ export default class TopicStore {
           resp.data.forEach(topic => {
             this.addTopic(topic)
           })
-          console.log(this.topics)
           resolve();
         } else {
           reject();

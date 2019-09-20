@@ -48,7 +48,6 @@ class MainAppBar extends React.Component {
   render() {
     const { classes, appState } = this.props
     const { user } = appState
-    console.log('user, user.', user.info.loginname)
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -60,7 +59,7 @@ class MainAppBar extends React.Component {
               CNode
             </Typography>
             <Button
-              variant="contained"
+              variant="flat"
               color="inherit"
               onClick={this.createButtonClick}
             >

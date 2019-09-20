@@ -94,7 +94,7 @@ class TopicList extends React.Component {
           topicSyncing ?
             (
               <div style={{ display: 'flex', justifyContent: 'center', padding: '40px 0' }}>
-                <CircularProgress color="accent" size={100} />
+                <CircularProgress color="primary" size={100} />
               </div>
             ) :
             null
