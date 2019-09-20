@@ -34,7 +34,7 @@ class MainAppBar extends React.Component {
   }
 
   createButtonClick = () => {
-
+    this.context.router.history.push('/topic/create')
   }
 
   loginButtonClick = () => {
@@ -63,7 +63,7 @@ class MainAppBar extends React.Component {
               color="inherit"
               onClick={this.createButtonClick}
             >
-              新建话题
+              Create Topic
             </Button>
             <Button color="inherit" variant="raised" onClick={this.loginButtonClick}>
               {

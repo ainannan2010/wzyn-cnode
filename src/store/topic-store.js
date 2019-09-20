@@ -53,7 +53,7 @@ export default class TopicStore {
 
   @observable details;
 
-  @observable createdTopic = [];
+  @observable createdTopics = [];
 
   @observable tab;
 
@@ -147,7 +147,7 @@ export default class TopicStore {
             id: resp.topic_id,
             create_at: Date.now(),
           };
-          this.createdTopic.push(new Topic(topic));
+          this.createdTopics.push(new Topic(topic));
           resolve();
         } else {
           reject();
