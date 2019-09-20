@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles, typography } from 'material-ui/styles'
+import { observer, inject } from 'mobx-react'
 
+
+import { withStyles, typography } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar';
 import Typography from 'material-ui/Typography';
 import ToolBar from 'material-ui/Toolbar';
@@ -18,9 +20,17 @@ const styles = {
   },
 }
 
+@inject(stores => {
+  return {
+    appState: stores.appState,
+  }
+}) @observer
 class MainAppBar extends React.Component {
+  static contextTypes = {
+    router: PropTypes.object,
+  }
   onHomeIconClick = () => {
-
+    this.context.router.history.push('/index?tab=all')
   }
 
   createButtonClick = () => {
@@ -28,11 +38,17 @@ class MainAppBar extends React.Component {
   }
 
   loginButtonClick = () => {
-
+    if (this.props.appState.user.info.loginname) {
+      this.context.router.history.push('/user/info')
+    } else {
+      this.context.router.history.push('/user/login')
+    }
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, appState } = this.props
+    const { user } = appState
+    console.log('user, user.', user.info.loginname)
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -50,8 +66,10 @@ class MainAppBar extends React.Component {
             >
               新建话题
             </Button>
-            <Button color="inherit" onClick={this.loginButtonClick}>
-              登陆
+            <Button color="inherit" variant="raised" onClick={this.loginButtonClick}>
+              {
+                user && user.info.loginname ? user.info.loginname : 'Login'
+              }
             </Button>
           </ToolBar>
         </AppBar>
@@ -59,7 +77,13 @@ class MainAppBar extends React.Component {
     )
   }
 }
+
+MainAppBar.wrappedComponent.propTypes = {
+  appState: PropTypes.object.isRequired,
+}
+
 MainAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 }
+
 export default withStyles(styles)(MainAppBar)

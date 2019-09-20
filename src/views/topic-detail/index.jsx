@@ -71,6 +71,8 @@ class TopicDetail extends React.Component {
       });
   }
 
+  getTopicId = () => this.props.match.params.id
+
   // render() {
   //   const { classes, user } = this.props;
   //   const { id } = this.props.match.params;
@@ -164,7 +166,6 @@ class TopicDetail extends React.Component {
 
   //   );
   // }
-  getTopicId = () => this.props.match.params.id
 
   render() {
     const { classes } = this.props;
