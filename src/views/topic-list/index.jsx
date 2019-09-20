@@ -3,10 +3,12 @@ import { observer, inject } from 'mobx-react'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 import queryString from 'query-string'
+
 import Tabs, { Tab } from 'material-ui/Tabs'
 import List from 'material-ui/List'
 import Button from 'material-ui/Button'
 import { CircularProgress } from 'material-ui/Progress'
+
 import AppState from '../../store/app-state'
 import Container from '../layout/container'
 import TopicListItem from './list-item'
@@ -63,9 +65,11 @@ class TopicList extends React.Component {
   render() {
     const {
       topicStore,
+      appState,
     } = this.props
-    const { topics: topicList, syncing: topicSyncing } = topicStore
+    const { createdTopics, topics: topicList, syncing: topicSyncing } = topicStore
     const tab = this.getTab()
+    const { user } = appState
     return (
       <Container>
         <Helmet>
@@ -79,6 +83,23 @@ class TopicList extends React.Component {
             ))
           }
         </Tabs>
+        <List style={{ backgroundColor: '#dfdfdf' }}>
+          {
+            createdTopics.map((topic) => {
+              topic = Object.assign({}, topic, {
+                author: user.info,
+              })
+
+              return (
+                <TopicListItem
+                  key={topic.id}
+                  topic={topic}
+                  onClick={() => this.listItemClick(topic)}
+                />
+              )
+            })
+          }
+        </List>
         <List>
           {
             topicList.map((topic) => (
