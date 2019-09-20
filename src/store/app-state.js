@@ -1,44 +1,85 @@
-import {
-  observable,
-  computed,
-  autorun,
-  action,
-} from 'mobx'
+import { observable, action, toJS } from 'mobx';
+import { post, get } from '../util/http';
 
 export default class AppState {
-  constructor({ count, name } = { count: 0, name: 'wy' }) {
-    this.count = count
-    this.name = name
+  @observable user = {
+    isLogin: false,
+    info: {},
+    detail: {
+      recentTopics: [],
+      recentReplies: [],
+      syncing: false,
+    },
+    collections: {
+      syncing: false,
+      list: [],
+    },
+  };
+
+  init({ user }) {
+    if (user) {
+      this.user = user;
+    }
   }
 
-  @observable count
-
-  @observable name
-
-  @computed get msg() {
-    return `${this.name} say count is ${this.count}`
+  @action login(accessToken) {
+    return new Promise((resolve, reject) => {
+      post('/user/login', {}, {
+        accessToken,
+      }).then((resp) => {
+        if (resp.success) {
+          this.user.info = resp.data;
+          this.user.isLogin = true;
+          resolve();
+        } else {
+          reject(resp);
+        }
+      }).catch(reject);
+    });
   }
 
-  @action add() {
-    this.count += 1
+  @action getUserDetail() {
+    this.user.detail.syncing = true;
+    return new Promise((resolve, reject) => {
+      get(`/user/${this.user.info.loginname}`)
+        .then((resp) => {
+          if (resp.success) {
+            this.user.detail.recentReplies = resp.data.recent_replies;
+            this.user.detail.recentTopics = resp.data.recent_topics;
+            resolve();
+          } else {
+            reject();
+          }
+          this.user.detail.syncing = false;
+        }).catch((err) => {
+          this.user.detail.syncing = false;
+          reject(err);
+        });
+    });
   }
 
-  @action changeName(name) {
-    this.name = name
+  @action getUserCollections() {
+    this.user.collections.syncing = true;
+    return new Promise((resolve, reject) => {
+      get(`/topic_collect/${this.user.info.loginname}`)
+        .then((resp) => {
+          if (resp.success) {
+            this.user.collections.list = resp.data;
+            resolve();
+          } else {
+            reject();
+          }
+          this.user.collections.syncing = false;
+        }).catch((err) => {
+          this.user.collections.syncing = false;
+          reject(err);
+        });
+    });
   }
 
   toJson() {
     return {
-      count: this.count,
-      name: this.name,
-    }
+      user: toJS(this.user),
+    };
   }
 }
-
-// const appState = new AppState()
-
-// autorun(() => {
-//   console.log(appState.msg)
-// }) // 一旦appState更新了，就会调用
-
-// export default appState

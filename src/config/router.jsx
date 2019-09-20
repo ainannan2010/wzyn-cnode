@@ -2,13 +2,13 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import TopicList from '../views/topic-list/index'
 import TopicDetail from '../views/topic-detail/index'
-import TestApi from '../views/test/api-test'
+import Login from '../views/user/login'
 
 export default () => (
   <div>
-    <Route path="/" render={() => <Redirect to="/list" />} exact key="index" />
-    <Route path="/list" component={TopicList} exact key="list" />
+    <Route path="/" render={() => <Redirect to="/index" />} exact key="index" />
+    <Route path="/index" component={TopicList} exact key="index" />
     <Route path="/detail/:id" component={TopicDetail} key="detail" />
-    <Route path="/test" component={TestApi} key="test" />
+    <Route path="/user/login" component={Login} key="login" />
   </div>
 )

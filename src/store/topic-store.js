@@ -62,7 +62,7 @@ export default class TopicStore {
     syncing = false,
     details = [],
     tab = null,
-  } = {}) {
+  } = { }) {
     this.topics = topics.map(topic => new Topic(createTopic(topic)));
     this.syncing = syncing;
     this.details = details.map(topic => new Topic(createTopic(topic)));

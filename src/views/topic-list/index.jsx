@@ -36,7 +36,7 @@ class TopicList extends React.Component {
 
   changeTab = (e, value) => {
     this.context.router.history.push({
-      path: '/list',
+      path: '/index',
       search: `?tab=${value}`,
     })
   }
