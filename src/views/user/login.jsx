@@ -32,11 +32,6 @@ class UserLogin extends React.Component {
     this.handleLogin = this.handleLogin.bind(this);
   }
 
-  componentWillMount() {
-    if (this.props.user.isLogin) {
-      this.context.router.history.replace('/user/info')
-    }
-  }
   getFrom(location) {
     location = location || this.props.location;
     const query = queryString.parse(location.search);
@@ -59,9 +54,6 @@ class UserLogin extends React.Component {
       helpText: '',
     });
     return this.props.appState.login(this.state.accesstoken)
-      .then(() => {
-        this.context.router.history.replace('/user/info')
-      })
       .catch((error) => {
         console.log(error); //eslint-disable-line
       });

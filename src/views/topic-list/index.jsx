@@ -67,7 +67,7 @@ class TopicList extends React.Component {
       topicStore,
       appState,
     } = this.props
-    const { createdTopics, topics: topicList, syncing: topicSyncing } = topicStore
+    const { createdTopics = [], topics: topicList, syncing: topicSyncing } = topicStore
     const tab = this.getTab()
     const { user } = appState
     return (

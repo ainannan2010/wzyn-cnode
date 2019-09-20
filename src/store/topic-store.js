@@ -76,10 +76,6 @@ export default class TopicStore {
     }, {});
   }
 
-  addTopic(topic) {
-    this.topics.push(new Topic(createTopic(topic)))
-  }
-
   @action fetchTopics(tab) {
     return new Promise((resolve, reject) => {
       // if (tab === this.tab && this.topics.length > 0) {
@@ -93,12 +89,9 @@ export default class TopicStore {
         tab,
       }).then((resp) => {
         if (resp.success) {
-          // this.topics = resp.data.map((topic) => {
-          //   return new Topic(createTopic(topic));
-          // });
-          resp.data.forEach(topic => {
-            this.addTopic(topic)
-          })
+          this.topics = resp.data.map((topic) => {
+            return new Topic(createTopic(topic));
+          });
           resolve();
         } else {
           reject();
