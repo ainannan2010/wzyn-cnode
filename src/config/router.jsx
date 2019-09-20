@@ -8,7 +8,7 @@ import UserInfo from '../views/user/info'
 export default () => (
   <div>
     <Route path="/" render={() => <Redirect to="/index" />} exact key="index" />
-    <Route path="/index" component={TopicList} exact key="index" />
+    <Route path="/index" component={TopicList} exact key="all" />
     <Route path="/detail/:id" component={TopicDetail} key="detail" />
     <Route path="/user/login" component={Login} key="login" />
     <Route path="/user/info" component={UserInfo} key="info" />
