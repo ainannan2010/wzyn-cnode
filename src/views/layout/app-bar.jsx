@@ -38,7 +38,7 @@ class MainAppBar extends React.Component {
   }
 
   loginButtonClick = () => {
-    if (this.props.appState.user.info.loginname) {
+    if (this.props.appState.user.info.isLogin) {
       this.context.router.history.push('/user/info')
     } else {
       this.context.router.history.push('/user/login')
@@ -46,8 +46,8 @@ class MainAppBar extends React.Component {
   }
 
   render() {
-    const { classes, appState } = this.props
-    const { user } = appState
+    const { classes } = this.props
+    const { user } = this.props.appState;
     return (
       <div className={classes.root}>
         <AppBar position="fixed">
@@ -67,7 +67,7 @@ class MainAppBar extends React.Component {
             </Button>
             <Button color="inherit" variant="raised" onClick={this.loginButtonClick}>
               {
-                user && user.info.loginname ? user.info.loginname : 'Login'
+                user && user.isLogin ? user.info.loginname : 'Login'
               }
             </Button>
           </ToolBar>

@@ -9,20 +9,13 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
-      },
-      {
-        test: /\.(png|svg|jpg|gif)$/,
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]?[hash]'
-        }
-      },
+      // {
+      //   test: /\.css$/,
+      //   use: [
+      //     'style-loader',
+      //     'css-loader'
+      //   ]
+      // },
       {
         enforce: 'pre',
         test: /\.(jsx|js)$/,
@@ -35,7 +28,14 @@ module.exports = {
         test: /\.(jsx|js)$/,
         exclude: /node_modules/,
         loader: 'babel-loader'
-      }
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]?[hash]'
+        }
+      },
     ]
   }
 }
