@@ -54,12 +54,14 @@ class TopicList extends React.Component {
   }
 
   bootstrap() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.props.appState.count = 3
-        resolve(true)
-      });
-    })
+    const query = queryString.parse(this.props.location.search);
+    const tab = query.tab || 'all';
+    const result = this.props.topicStore.fetchTopics(tab).then(() => {
+      return true;
+    }).catch(() => {
+      return false;
+    });
+    return result;
   }
 
   render() {

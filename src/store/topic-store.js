@@ -62,7 +62,7 @@ export default class TopicStore {
     syncing = false,
     details = [],
     tab = null,
-  } = { }) {
+  } = {}) {
     this.topics = topics.map(topic => new Topic(createTopic(topic)));
     this.details = details.map(topic => new Topic(createTopic(topic)));
     this.syncing = syncing;
@@ -78,30 +78,30 @@ export default class TopicStore {
 
   @action fetchTopics(tab) {
     return new Promise((resolve, reject) => {
-      // if (tab === this.tab && this.topics.length > 0) {
-      //   resolve();
-      // } else {
-      this.tab = tab;
-      this.syncing = true;
-      this.topics = [];
-      get('/topics', {
-        mdrender: false, // 是否把markdown语法转换为html， 不转换为了好编辑markdown
-        tab,
-      }).then((resp) => {
-        if (resp.success) {
-          this.topics = resp.data.map((topic) => {
-            return new Topic(createTopic(topic));
-          });
-          resolve();
-        } else {
-          reject();
-        }
-        this.syncing = false;
-      }).catch((err) => {
-        reject(err);
-        this.syncing = false;
-      });
-      // }
+      if (tab === this.tab && this.topics.length) {
+        resolve();
+      } else {
+        this.tab = tab;
+        this.syncing = true;
+        this.topics = [];
+        get('/topics', {
+          mdrender: false, // 是否把markdown语法转换为html， 不转换为了好编辑markdown
+          tab,
+        }).then((resp) => {
+          if (resp.success) {
+            this.topics = resp.data.map((topic) => {
+              return new Topic(createTopic(topic));
+            });
+            resolve();
+          } else {
+            reject();
+          }
+          this.syncing = false;
+        }).catch((err) => {
+          reject(err);
+          this.syncing = false;
+        });
+      }
     });
   }
 

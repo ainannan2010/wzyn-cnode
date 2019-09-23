@@ -25,20 +25,26 @@ const createApp = (TheApp) => {
     componentDidMount() {
       const jssStyles = document.getElementById('jss-server-side');
       if (jssStyles && jssStyles.parentNode) {
-        jssStyles.parentNode.removeChild(jssStyles);
+        // jssStyles.parentNode.removeChild(jssStyles);
       }
     }
 
     render() {
-      return <TheApp />;
+      return <TheApp />
     }
   }
   return Main;
-};
+}
+
 const root = document.getElementById('root')
 const initialState = window.__INITIAL__STATE__ || {}
-const appState = new AppState(initialState.appState)
+const appState = new AppState();
+appState.init(initialState.appState)
+// if (initialState.appState) {
+//   appState.init(initialState.appState)
+// }
 const topicStore = new TopicStore(initialState.topicStore)
+
 const render = (Component) => {
   ReactDOM.hydrate(
     <AppContainer>
@@ -56,7 +62,9 @@ const render = (Component) => {
     root,
   )
 }
+
 render(createApp(App))
+
 if (module.hot) {
   module.hot.accept('./views/App', () => {
     const NextApp = require('./views/App').default // eslint-disable-line

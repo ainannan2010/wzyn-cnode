@@ -17,25 +17,31 @@ const getStoreState = stores => Object.keys(stores).reduce((result, storeName) =
 }, {})
 
 module.exports = (bundle, template, req, res) => {
+  const user = req.session.user
+  const createStoreMap = bundle.createStoreMap
+  const createApp = bundle.default
+  const routerContext = {}
+  const stores = createStoreMap()
+  // const jss = create(preset())
+  // jss.options.createGenerateClassName = createGenerateClassName
+
+  if (user) {
+    stores.appState.user.isLogin = true
+    stores.appState.user.info = user
+  }
+
+  const sheetsRegistry = new SheetsRegitry()
+  const theme = createMuiTheme({
+    palette: {
+      primary: colors.blue,
+      secondary: colors.pink,
+      type: 'light'
+    }
+  })
+
+  const generateClassName = createGenerateClassName()
+  const app = createApp(stores, routerContext, sheetsRegistry, generateClassName, theme, req.url) // app 是react元素类型
   return new Promise((resolve, reject) => {
-    const createStoreMap = bundle.createStoreMap
-    const createApp = bundle.default
-    const routerContext = {}
-    const stores = createStoreMap()
-    const sheetsRegistry = new SheetsRegitry()
-    // const jss = create(preset())
-    // jss.options.createGenerateClassName = createGenerateClassName
-    const generateClassName = createGenerateClassName()
-    const theme = createMuiTheme({
-      palette: {
-        primary: colors.blue,
-        secondary: colors.pink,
-        type: 'light'
-      }
-    })
-
-    const app = createApp(stores, routerContext, sheetsRegistry, generateClassName, theme, req.url) // app 是react元素类型
-
     bootstrap(app).then(() => {
       // 如果是请求首页成功定向到/list页
       if (routerContext.url) {
