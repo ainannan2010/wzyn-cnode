@@ -1,0 +1,6 @@
+apps:
+- script: ./server/server.js
+  name: wzyn-cnode
+  env_prodoction:
+    NODE_ENV: production
+    HOST: localhost

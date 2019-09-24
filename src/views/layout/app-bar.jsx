@@ -56,7 +56,7 @@ class MainAppBar extends React.Component {
               <HomeIcon />
             </IconButton>
             <Typography type="title" color="inherit" className={classes.flex}>
-              CNode
+              Wzyn-cnode
             </Typography>
             <Button
               variant="flat"

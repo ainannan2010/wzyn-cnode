@@ -43,6 +43,9 @@ app.use(function (error, req, res, next) {
   res.status(500).send(error)
 })
 
-app.listen(3333, function () {
+// 默认是0.0.0.0 ，为了安全， 因为部署到外网上会产生一个对外的ip，不希望别人通过ip访问我们的网站，只能通过域名访问
+const host = process.env.HOST || '0.0.0.0'
+const port = process.env.PORT || 3333
+app.listen(port, host, function () { // host是个可选的参数，不传默认是0.0.0.0
   console.log('server is listening at 3333')
 })
