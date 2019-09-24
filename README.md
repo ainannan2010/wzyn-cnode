@@ -1,2 +1,2 @@
 # wzyn-code
-like a code
+like a cnode
