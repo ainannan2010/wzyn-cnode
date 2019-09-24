@@ -1,2 +1,2 @@
-# wzyn-code
+# wzyn-cnode
 like a cnode
